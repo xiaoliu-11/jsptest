@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.jsptest.dao.AreaDao">
+
+    <resultMap id="BaseResultMap" type="com.example.jsptest.entity.Province">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="provinceID" jdbcType="INTEGER" property="provinceID"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapCity" type="com.example.jsptest.entity.City">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="cityID" jdbcType="INTEGER" property="cityID"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="fatherID" jdbcType="INTEGER" property="fatherID"/>
+    </resultMap>
+
+
+    <resultMap id="BaseResultMapArea" type="com.example.jsptest.entity.Area">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="areaID" jdbcType="INTEGER" property="areaID"/>
+        <result column="area" jdbcType="VARCHAR" property="area"/>
+        <result column="fatherID" jdbcType="INTEGER" property="fatherID"/>
+
+    </resultMap>
+
+    <select id="getProvinces"  resultMap="BaseResultMap">
+       select  * from province
+    </select>
+
+
+    <select id="getCitys" resultMap="BaseResultMapCity">
+      select *
+      from city c
+      join province p
+    on c.fatherID= p.provinceID
+    where province =#{province}
+</select>
+
+
+    <select id="getAreas" resultMap="BaseResultMapArea">
+       select *
+        from area a
+        join city c
+        on a.fatherID=c.cityID
+        where city=#{city}
+</select>
+
+</mapper>
